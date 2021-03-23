@@ -109,49 +109,50 @@ com_models <- function()
                   ysfsq = stan_data$ysfsq,
                   dy = stan_data$dy,
                   parea = stan_data$parea,
+                  py = stan_data$py,
                   elev = stan_data$elev,
                   elevsq = stan_data$elevsq,
                   lat = stan_data$lat)
   
   m_rich <- brm(rich_mn | se(rich_sd, sigma = TRUE) ~ 
-                  dist + ysf + ysfsq + dy + parea + elev + elevsq + lat +
+                  dist + ysf + ysfsq + dy + parea + py + elev + elevsq + lat +
                   (1|locs) + (1|patches) + (1|fires), 
                 family = gaussian(link = "log"),
                 data = d, chains = 4, cores = 4, iter = 1000)
   
   mc1_rich <- brm(crich1_mn | se(crich1_sd, sigma = TRUE) ~ 
-                   dist + ysf + ysfsq + dy + parea + elev + elevsq + lat +
+                   dist + ysf + ysfsq + dy + parea + py + elev + elevsq + lat +
                    (1|locs) + (1|patches) + (1|fires), 
                   family = gaussian(link = "log"),
                  data = d, chains = 4, cores = 4, iter = 1000)
   
   mc2_rich <- brm(crich2_mn | se(crich2_sd, sigma = TRUE) ~ 
-                    dist + ysf + ysfsq + dy + parea + elev + elevsq + lat +
+                    dist + ysf + ysfsq + dy + parea + py + elev + elevsq + lat +
                     (1|locs) + (1|patches) + (1|fires), 
                   family = gaussian(link = "log"),
                   data = d, chains = 4, cores = 4, iter = 1000)
   
   mg_rich <- brm(grich_mn | se(grich_sd, sigma = TRUE) ~ 
-                   dist + ysf + ysfsq + dy + parea + elev + elevsq + lat +
+                   dist + ysf + ysfsq + dy + parea + py + elev + elevsq + lat +
                    (1|locs) + (1|patches) + (1|fires), 
                  family = gaussian(link = "log"),
                  data = d, chains = 4, cores = 4, iter = 1000)
   
   ms_rich <- brm(srich_mn | se(srich_sd, sigma = TRUE) ~ 
-                   dist + ysf + ysfsq + dy + parea + elev + elevsq + lat +
+                   dist + ysf + ysfsq + dy + parea + py + elev + elevsq + lat +
                    (1|locs) + (1|patches) + (1|fires), 
                  family = gaussian(link = "log"),
                  data = d, chains = 4, cores = 4, iter = 1000)
   
   mt_rich <- brm(trich_mn | se(trich_sd, sigma = TRUE) ~ 
-                   dist + ysf + ysfsq + dy + parea + elev + elevsq + lat +
+                   dist + ysf + ysfsq + dy + parea + py + elev + elevsq + lat +
                    (1|locs) + (1|patches) + (1|fires), 
                  family = gaussian(link = "log"),
                  data = d, chains = 4, cores = 4, iter = 1000)
   
   ## Dispersion model (not splitting by guild)
   m_disp <- brm(disp_mn | se(disp_sd, sigma = TRUE) ~ 
-                  dist + ysf + ysfsq + dy + parea + elev + elevsq + lat +
+                  dist + ysf + ysfsq + dy + parea + py + elev + elevsq + lat +
                   (1|locs) + (1|patches),# + (1|fires), 
                 family = gaussian(link = "log"),
                 data = d, chains = 4, cores = 4, iter = 1000)

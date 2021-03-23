@@ -24,11 +24,11 @@ runstan <- function(data_path = "Data/msom_modeldata.RData",
             'b_fire', 'b_patch', 'b_loc', #varying intercepts, mu = 0
             ## community mean effects
             'mu_b_dist', 'mu_b_ysf', 'mu_b_ysfsq', 'mu_b_dy',
-            'mu_b_parea', 'mu_b_elev', 'mu_b_elevsq', 
+            'mu_b_parea', 'mu_b_py', 'mu_b_elev', 'mu_b_elevsq', 
             'mu_a_snagba', 'mu_a_shrub', 'mu_a_jday', 'mu_a_jdaysq',
             ## species-level effects
             'b_dist', 'b_ysf', 'b_ysfsq', 'b_dy', 
-            'b_parea', 'b_elev', 'b_elevsq', 'b_lat',
+            'b_parea', 'b_py', 'b_elev', 'b_elevsq', 'b_lat',
             'a_snagba', 'a_shrub', 'a_jday', 'a_jdaysq',
             'logit_psi'
   )

@@ -33,6 +33,7 @@ data {
   vector[M] ysfsq;                // YSF quadratic
   vector[M] dy;                   // dist x ysf interaction term
   vector[M] parea;                // patch area
+  vector[M] py;                   // parea x ysf interaction term
   vector[M] elev;                 // elevation
   vector[M] elevsq;               // elevation quadratic
   vector[M] lat;                  // latitude
@@ -88,9 +89,13 @@ parameters {
   real<lower=0> sigma_b_dy;
   vector[S] tilde_b_dy;
   
-  real mu_b_parea; //high severity area residual
+  real mu_b_parea; //high severity area 
   real<lower=0> sigma_b_parea;
   vector[S] tilde_b_parea;
+  
+  real mu_b_py; //high severity area x ysf
+  real<lower=0> sigma_b_py;
+  vector[S] tilde_b_py;
 
   real mu_b_elev; //elevation
   real<lower=0> sigma_b_elev;
@@ -134,6 +139,7 @@ transformed parameters {
   vector[S] b_ysfsq = mu_b_ysfsq + sigma_b_ysfsq * tilde_b_ysfsq;
   vector[S] b_dy = mu_b_dy + sigma_b_dy * tilde_b_dy;
   vector[S] b_parea = mu_b_parea + sigma_b_parea * tilde_b_parea;
+  vector[S] b_py = mu_b_py + sigma_b_py * tilde_b_py;
   vector[S] b_elev = mu_b_elev + sigma_b_elev * tilde_b_elev;
   vector[S] b_elevsq = mu_b_elevsq + sigma_b_elevsq * tilde_b_elevsq;
   vector[S] b_lat = mu_b_lat + sigma_b_lat * tilde_b_lat;
@@ -166,7 +172,7 @@ transformed parameters {
       b_loc[s,locs[i]] + b_patch[s,patches[i]] + b_fire[s,fires[i]] + //species-level intercepts
       b_dist[s] * dist[i] + b_ysf[s] * ysf[i] + b_ysfsq[s] * ysfsq[i] + 
       b_dy[s] * dy[i] + 
-      b_parea[s] * parea[i] +
+      b_parea[s] * parea[i] + b_py[s] * py[i] +
       b_elev[s] * elev[i] + b_elevsq[s] * elevsq[i] + b_lat[s] * lat[i];
     }
   }
@@ -210,6 +216,7 @@ model {
   tilde_b_ysfsq ~ normal(0, 1);
   tilde_b_dy ~ normal(0, 1);
   tilde_b_parea ~ normal(0, 1);
+  tilde_b_py ~ normal(0, 1);
   tilde_b_elev ~ normal(0, 1);
   tilde_b_elevsq ~ normal(0, 1);
   tilde_b_lat ~ normal(0, 1);
@@ -224,6 +231,7 @@ model {
   sigma_b_ysfsq ~ normal(0, 1);
   sigma_b_dy ~ normal(0, 1);
   sigma_b_parea ~ normal(0, 1);
+  sigma_b_py ~ normal(0, 1);
   sigma_b_elev ~ normal(0, 1);
   sigma_b_elevsq ~ normal(0, 1);
   sigma_b_lat ~ normal(0, 1);
@@ -238,6 +246,7 @@ model {
   mu_b_ysfsq ~ normal(0, 1);
   mu_b_dy ~ normal(0, 1);
   mu_b_parea ~ normal(0, 1);
+  mu_b_py ~ normal(0, 1);
   mu_b_elev ~ normal(0, 1);
   mu_b_elevsq ~ normal(0, 1);
   mu_b_lat ~ normal(0, 1);
